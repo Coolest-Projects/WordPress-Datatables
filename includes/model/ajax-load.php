@@ -115,9 +115,26 @@
                 "aaData": data,
                 "aoColumns": columns,
                 "columnDefs": [
-                    {"className": "dt-center", "targets": "_all"}
+                    {
+                        "className": "dt-center", 
+                        "targets": "_all",
+                        "targets": [0, 1, 2, 3, 4],
+                        "createdCell": function (td, cellData, rowData, row, col) {
+                            if ( rowData.cluster_hostname.toLowerCase().match('aps') || rowData.cluster_hostname.toLowerCase().match('audit') || rowData.cluster_hostname.toLowerCase().includes('datafied')   ) {
+                                rowData.cluster_hostname += "aaaa";
+                                $(td).css('background-color', 'rgb(197, 255, 197)')
+                            }
+                            console.log(rowData);
+                        },
+                        "createdRow": function( row, data, dataIndex ) {
+                            // if ( data[4] == "A" ) {
+                            //     $(row).addClass( 'important' );
+                            // }
+                            console.log(row+'::'+data+'::'+dataIndex);
+                        }
+                    }
                 ],
-            });
+            })
         }
 
         //IMPLEMENT DATATABLES RESPONSIVENESS.
